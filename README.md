@@ -88,6 +88,6 @@ Note that the docker image can be also built using the Makefile:
 $ make image
 ```
 
-blaaa
+blaaaaaaaa
 
 Cf. the previous docker image instructions to read how to start the container.
