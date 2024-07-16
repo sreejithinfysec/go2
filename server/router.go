@@ -31,7 +31,8 @@ func NewRouter(templateDir string) *mux.Router {
 	// /products vulnerable to SQL injections
 	r.HandleFunc("/products", func(w http.ResponseWriter, r *http.Request) {
 		category := r.FormValue("category")
-		products, err := vulnerable.GetProducts(r.Context(), db, category)
+		price := r.FormValue("price")
+		products, err := vulnerable.GetProducts(r.Context(), db, category, price)
 		if err != nil {
 			log.Println(err)
 			return
@@ -44,7 +45,7 @@ func NewRouter(templateDir string) *mux.Router {
 	// /api/health vulnerable to shell injections
 	r.HandleFunc("/api/health", func(w http.ResponseWriter, r *http.Request) {
 		extra := r.FormValue("extra")
-		output, err := vulnerable.System(r.Context(), "ping -c1 sqreen.com"+extra)
+		output, err := vulnerable.System(r.Context(), "ping -c1 "+extra)
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)

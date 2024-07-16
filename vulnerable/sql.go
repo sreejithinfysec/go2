@@ -65,8 +65,8 @@ type Product struct {
 	Price    string
 }
 
-func GetProducts(ctx context.Context, db *sql.DB, category string) ([]Product, error) {
-	rows, err := db.QueryContext(ctx, "SELECT * FROM product WHERE category='"+category+"'")
+func GetProducts(ctx context.Context, db *sql.DB, category string, price string) ([]Product, error) {
+	rows, err := db.QueryContext(ctx, "SELECT * FROM product WHERE category='"+category+"' and price='"+price+"'")
 	if err != nil {
 		return nil, err
 	}
