@@ -6,6 +6,7 @@ name: qwiet.ai
 on:
   pull_request:
   workflow_dispatch:
+  push:
 
 jobs:
   NextGen-Static-Analysis:
@@ -14,7 +15,7 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/setup-go@v3
       with:
-        go-version: 'latest'
+        go-version: '1.23'
     - name: Build
       run: |
         go build ./...
@@ -29,7 +30,7 @@ jobs:
         ${GITHUB_WORKSPACE}/sl analyze --strict --wait \
           --app go2 \
           --tag branch=${{ github.head_ref }} \
-          --go $(pwd)
+          $(pwd)
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
         SHIFTLEFT_API_HOST: www.shiftleft.io
